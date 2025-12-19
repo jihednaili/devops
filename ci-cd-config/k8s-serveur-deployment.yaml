@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: serveur-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: serveur
+  template:
+    metadata:
+      labels:
+        app: serveur
+    spec:
+      containers:
+        - name: serveur
+          image: YOUR_REGISTRY/serveur:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 6000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: serveur-service
+spec:
+  selector:
+    app: serveur
+  ports:
+    - name: tcp
+      port: 6000
+      targetPort: 6000
+  type: ClusterIP

@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts
+    user: root
+    privileged: true
+    network_mode: host
+    environment:
+      - JAVA_OPTS=-Dhudson.plugins.git.GitSCM.ALLOW_LOCAL_CHECKOUT=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./jenkins_home:/var/jenkins_home
+      - /home/devops/devops-project/atelier-jenkins-k8s:/workspace
