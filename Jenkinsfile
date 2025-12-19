@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY = "midenimeed"
+        REGISTRY = "jihednaili"
         REGISTRY_CREDENTIALS_ID = "dockerhub-creds"
         IMAGE_TAG = "build-${env.BUILD_NUMBER}"
     }
