@@ -64,13 +64,40 @@ int main(int argc, char *argv[]) {
         }
 
         char buffer[BUFFER_SIZE];
+        
+        // Message 1: Receive "Hi" from client
         ssize_t received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
         if (received > 0) {
             buffer[received] = '\0';
             printf("[serveur] Received: %s\n", buffer);
-            const char *response = "pong from server";
-            send(client_fd, response, strlen(response), 0);
+            
+            const char *response1 = "Hello! How are you?";
+            send(client_fd, response1, strlen(response1), 0);
+            printf("[serveur] Sent: %s\n", response1);
         }
+        
+        // Message 2: Receive "I'm fine" from client
+        received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+        if (received > 0) {
+            buffer[received] = '\0';
+            printf("[serveur] Received: %s\n", buffer);
+            
+            const char *response2 = "Great! Nice to talk with you!";
+            send(client_fd, response2, strlen(response2), 0);
+            printf("[serveur] Sent: %s\n", response2);
+        }
+        
+        // Message 3: Receive "Goodbye" from client
+        received = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+        if (received > 0) {
+            buffer[received] = '\0';
+            printf("[serveur] Received: %s\n", buffer);
+            
+            const char *response3 = "Goodbye! Have a great day!";
+            send(client_fd, response3, strlen(response3), 0);
+            printf("[serveur] Sent: %s\n", response3);
+        }
+        
         close(client_fd);
     }
 

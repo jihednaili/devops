@@ -60,15 +60,43 @@ int main(int argc, char *argv[]) {
     printf("[client] Connecting to %s:%d\n", host, port);
     int sockfd = connect_to_server(host, port);
 
-    const char *message = "ping from client";
-    if (send(sockfd, message, strlen(message), 0) < 0) {
+    char buffer[BUFFER_SIZE];
+    
+    // Message 1: Say "Hi" to server
+    const char *message1 = "Hi, Server!";
+    printf("[client] Sending: %s\n", message1);
+    if (send(sockfd, message1, strlen(message1), 0) < 0) {
         perror("send");
         close(sockfd);
         exit(EXIT_FAILURE);
     }
-
-    char buffer[BUFFER_SIZE];
+    
+    // Receive response
     ssize_t received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
+    if (received > 0) {
+        buffer[received] = '\0';
+        printf("[client] Received: %s\n", buffer);
+    }
+    
+    // Message 2: Respond "I'm fine"
+    const char *message2 = "I'm fine, thank you!";
+    printf("[client] Sending: %s\n", message2);
+    send(sockfd, message2, strlen(message2), 0);
+    
+    // Receive response
+    received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
+    if (received > 0) {
+        buffer[received] = '\0';
+        printf("[client] Received: %s\n", buffer);
+    }
+    
+    // Message 3: Say "Goodbye"
+    const char *message3 = "Goodbye, Server!";
+    printf("[client] Sending: %s\n", message3);
+    send(sockfd, message3, strlen(message3), 0);
+    
+    // Receive final response
+    received = recv(sockfd, buffer, sizeof(buffer) - 1, 0);
     if (received > 0) {
         buffer[received] = '\0';
         printf("[client] Received: %s\n", buffer);
